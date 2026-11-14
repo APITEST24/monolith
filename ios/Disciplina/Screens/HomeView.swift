@@ -4,140 +4,181 @@ struct HomeView: View {
     @EnvironmentObject private var model: AppModel
     @EnvironmentObject private var theme: ThemeController
 
+    private let cardRadius: CGFloat = 32
+
     var body: some View {
-        ScreenColumn {
+        VStack(spacing: 0) {
             header
             if let note = model.note, model.serverConfigured {
                 Text(note)
-                    .font(ManropeFont.font(size: 13, weight: .medium))
-                    .foregroundStyle(theme.secondary)
+                    .face(13, .medium, em: -0.01)
+                    .foregroundStyle(theme.muted)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 8)
             }
             if let snapshot = model.snapshot {
-                NavigationLink(value: Route.finance) {
-                    financeCard(snapshot)
+                ViewThatFits(in: .vertical) {
+                    fitted(snapshot)
+                    ScreenColumn {
+                        financeCard(snapshot)
+                        peeks(snapshot)
+                    }
                 }
-                .buttonStyle(.plain)
-                sectionLink(.bundles, "Связки", snapshot.home.bundlesLabel, Route.bundles)
-                sectionLink(.geo, "Гео", snapshot.home.geosLabel, Route.geo)
-                sectionLink(.tasks, "Задачи", snapshot.home.tasksLabel, Route.tasks)
-                sectionLink(.journal, "Журнал решений", snapshot.home.journalLabel, Route.journal)
-                sectionLink(.rules, "Правила", snapshot.home.rulesLabel, Route.rules)
             } else if model.loading {
-                ProgressView()
-                    .tint(.white)
-                    .padding(.top, 80)
+                Spacer()
+                ProgressView().tint(theme.ink)
+                Spacer()
             } else {
+                Spacer()
                 Text("Нет сохранённых данных")
-                    .font(ManropeFont.font(size: 16, weight: .medium))
-                    .foregroundStyle(theme.secondary)
-                    .padding(.top, 80)
+                    .face(16, .medium)
+                    .foregroundStyle(theme.muted)
                 Button("Повторить") { Task { await model.refresh() } }
-                    .font(ManropeFont.font(size: 16, weight: .semibold))
-                    .foregroundStyle(.white)
+                    .face(16, .semibold)
+                    .foregroundStyle(theme.ink)
+                    .padding(.top, 12)
+                Spacer()
             }
         }
-        .background(AppColor.background.ignoresSafeArea())
+        .background(AppBackground())
         .toolbar(.hidden, for: .navigationBar)
     }
 
     private var header: some View {
         HStack(alignment: .center) {
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text("Дисциплина")
-                    .font(ManropeFont.font(size: 30, weight: .bold))
-                    .foregroundStyle(.white)
+                    .face(22, .bold, em: -0.04)
+                    .foregroundStyle(theme.ink)
                 Text(model.snapshot?.dateLabel ?? "")
-                    .font(ManropeFont.font(size: 15, weight: .medium))
-                    .foregroundStyle(theme.secondary)
+                    .face(14, .medium, em: -0.01)
+                    .foregroundStyle(theme.muted)
             }
             Spacer()
-            CircleIconButton(system: "ellipsis") { model.showSettings = true }
+            DotButton { model.showSettings = true }
         }
-        .padding(.top, 4)
-        .padding(.bottom, 6)
+        .padding(.leading, 24)
+        .padding(.trailing, 22)
+        .padding(.top, 8)
+        .padding(.bottom, 14)
+    }
+
+    private func fitted(_ snapshot: Snapshot) -> some View {
+        VStack(spacing: 14) {
+            financeCard(snapshot).frame(height: 358)
+            peeks(snapshot)
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 28)
+    }
+
+    @ViewBuilder
+    private func peeks(_ snapshot: Snapshot) -> some View {
+        sectionLink(.bundles, "Связки", snapshot.home.bundlesLabel, Route.bundles, monoIndex: 0)
+        sectionLink(.geo, "Гео", snapshot.home.geosLabel, Route.geo, monoIndex: 1)
+        sectionLink(.tasks, "Задачи", snapshot.home.tasksLabel, Route.tasks, monoIndex: 2)
+        sectionLink(.journal, "Журнал решений", snapshot.home.journalLabel, Route.journal, monoIndex: 3)
+        sectionLink(.rules, "Правила", snapshot.home.rulesLabel, Route.rules, monoIndex: 4)
     }
 
     private func financeCard(_ snapshot: Snapshot) -> some View {
         let display = snapshot.finance.display
         let fraction = snapshot.finance.stopLimit > 0 ? snapshot.finance.stopSpent / snapshot.finance.stopLimit : 0
-        return JellyChrome(palette: theme.palette(.finance), shape: RoundedRectangle(cornerRadius: 30, style: .continuous)) {
-            VStack(spacing: 0) {
-                Text("Финансы")
-                    .font(ManropeFont.font(size: 14, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.86))
-                Text("Сегодня")
-                    .font(ManropeFont.font(size: 16, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.92))
-                    .padding(.top, 12)
-                Text(display.profitToday)
-                    .font(ManropeFont.font(size: 52, weight: .bold))
-                    .foregroundStyle(.white)
-                    .minimumScaleFactor(0.6)
-                    .lineLimit(1)
-                    .padding(.top, 2)
-                Text("прибыль за день")
-                    .font(ManropeFont.font(size: 15, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.82))
-                HStack(spacing: 0) {
-                    metric("Расход", display.spendToday)
-                    divider
-                    metric("Доход", display.incomeToday)
-                    divider
-                    metric("ROI", display.roiToday)
+        return NavigationLink(value: Route.finance) {
+            JellyChrome(
+                skin: theme.hero(.finance),
+                shape: RoundedRectangle(cornerRadius: cardRadius, style: .continuous)
+            ) {
+                VStack(spacing: 0) {
+                    Text("Финансы")
+                        .face(15, .bold, em: -0.02)
+                        .foregroundStyle(theme.ink)
+                    Text("Сегодня")
+                        .face(13, .semibold)
+                        .foregroundStyle(theme.onHero)
+                        .padding(.top, 22)
+                    Text(display.profitToday)
+                        .face(64, .bold, em: -0.05)
+                        .foregroundStyle(theme.ink)
+                        .minimumScaleFactor(0.6)
+                        .lineLimit(1)
+                        .padding(.top, 4)
+                        .shadow(color: .black.opacity(0.10), radius: 0, y: 2)
+                    Text("прибыль за день")
+                        .face(15, .medium)
+                        .foregroundStyle(theme.onHero)
+                        .padding(.top, 8)
+                    Spacer(minLength: 12)
+                    Well {
+                        HStack(spacing: 0) {
+                            metric("Расход", display.spendToday)
+                            metric("Доход", display.incomeToday, divider: true)
+                            metric("ROI", display.roiToday, divider: true)
+                        }
+                    }
+                    HStack {
+                        Text("Стоп-лосс дня")
+                            .face(12, .semibold)
+                            .foregroundStyle(theme.onHero)
+                        Spacer()
+                        Text(display.stopRatio)
+                            .face(13, ManropeFont.demi, em: -0.02)
+                            .foregroundStyle(theme.ink)
+                    }
+                    .padding(.top, 14)
+                    .padding(.bottom, 8)
+                    HairlineProgress(fraction: fraction, tint: theme.bar(.bundles))
                 }
-                .padding(.vertical, 12)
-                .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(Color.black.opacity(0.16)))
-                .padding(.top, 18)
-                HStack {
-                    Text("Стоп-лосс дня")
-                        .font(ManropeFont.font(size: 14, weight: .medium))
-                    Spacer()
-                    Text(display.stopRatio)
-                        .font(ManropeFont.font(size: 14, weight: .semibold))
-                }
-                .foregroundStyle(.white.opacity(0.92))
-                .padding(.top, 14)
-                HairlineProgress(fraction: fraction, tint: theme.gold)
-                    .padding(.top, 8)
+                .padding(.horizontal, 24)
+                .padding(.top, 24)
+                .padding(.bottom, 20)
             }
-            .padding(.horizontal, 18)
-            .padding(.vertical, 20)
         }
+        .buttonStyle(.plain)
     }
 
-    private func metric(_ title: String, _ value: String) -> some View {
-        VStack(spacing: 4) {
+    private func metric(_ title: String, _ value: String, divider: Bool = false) -> some View {
+        VStack(spacing: 5) {
             Text(title)
-                .font(ManropeFont.font(size: 12, weight: .medium))
-                .foregroundStyle(.white.opacity(0.7))
+                .face(12, .semibold)
+                .foregroundStyle(theme.onHero)
             Text(value)
-                .font(ManropeFont.font(size: 18, weight: .bold))
-                .foregroundStyle(.white)
+                .face(18, .bold, em: -0.03)
+                .foregroundStyle(theme.ink)
                 .minimumScaleFactor(0.7)
                 .lineLimit(1)
         }
         .frame(maxWidth: .infinity)
+        .padding(.vertical, 14)
+        .overlay(alignment: .leading) {
+            if divider {
+                Rectangle().fill(theme.ink.opacity(0.16)).frame(width: 1).padding(.vertical, 14)
+            }
+        }
     }
 
-    private var divider: some View {
-        Rectangle().fill(Color.white.opacity(0.16)).frame(width: 1, height: 28)
-    }
-
-    private func sectionLink(_ section: SectionKind, _ title: String, _ meta: String, _ route: Route) -> some View {
-        NavigationLink(value: route) {
-            JellyChrome(palette: theme.palette(section), shape: Capsule()) {
+    private func sectionLink(
+        _ section: SectionKind,
+        _ title: String,
+        _ meta: String,
+        _ route: Route,
+        monoIndex: Int
+    ) -> some View {
+        let paint = theme.monochrome ? theme.monoPeek(monoIndex) : theme.hero(section)
+        return NavigationLink(value: route) {
+            JellyChrome(skin: paint, shape: RoundedRectangle(cornerRadius: cardRadius, style: .continuous)) {
                 HStack {
                     Text(title)
-                        .font(ManropeFont.font(size: 18, weight: .semibold))
+                        .face(17, .bold, em: -0.03)
+                        .foregroundStyle(theme.peekInk(section))
                     Spacer()
                     Text(meta)
-                        .font(ManropeFont.font(size: 15, weight: .medium))
-                        .opacity(0.9)
+                        .face(13, UIFont.Weight(rawValue: 0.26), em: -0.01)
+                        .foregroundStyle(theme.peekMuted(section))
                 }
-                .foregroundStyle(.white)
-                .padding(.horizontal, 22)
-                .padding(.vertical, 18)
+                .padding(.horizontal, 24)
+                .frame(maxWidth: .infinity, minHeight: 64, maxHeight: .infinity)
             }
         }
         .buttonStyle(.plain)

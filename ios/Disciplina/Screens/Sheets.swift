@@ -16,7 +16,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 18) {
                     Text("Тема")
                         .font(ManropeFont.font(size: 13, weight: .semibold))
-                        .foregroundStyle(theme.tertiary)
+                        .foregroundStyle(theme.muted)
                     Picker("Тема", selection: $theme.monochrome) {
                         Text("Цветная").tag(false)
                         Text("Монохром").tag(true)
@@ -25,7 +25,7 @@ struct SettingsView: View {
 
                     Text("Сервер")
                         .font(ManropeFont.font(size: 13, weight: .semibold))
-                        .foregroundStyle(theme.tertiary)
+                        .foregroundStyle(theme.muted)
                     field("https://имя.tailnet.ts.net", text: $url)
                     SecureField("API-ключ телефона", text: $apiKey)
                         .font(ManropeFont.font(size: 16, weight: .medium))
@@ -36,7 +36,7 @@ struct SettingsView: View {
                         KeychainStore.set(apiKey.trimmingCharacters(in: .whitespacesAndNewlines), account: "api-key")
                         Task { await model.refresh() }
                     }
-                    .buttonStyle(JellyButtonStyle(palette: theme.palette(.finance)))
+                    .buttonStyle(JellyButtonStyle(skin: theme.hero(.finance)))
 
                     Toggle("Локальные уведомления", isOn: $alerts)
                         .font(ManropeFont.font(size: 16, weight: .semibold))
@@ -68,16 +68,16 @@ struct SettingsView: View {
                     .foregroundStyle(.white)
                     Button("Вернуть пример") { model.restoreDemo() }
                         .font(ManropeFont.font(size: 16, weight: .semibold))
-                        .foregroundStyle(theme.secondary)
+                        .foregroundStyle(theme.muted)
 
                     Text("Пока адрес сервера пустой, телефон показывает пример с бюджетом $1 000 и копит правки локально. Когда связь с сервером появится, очередь уйдёт сама.")
                         .font(ManropeFont.font(size: 13, weight: .medium))
-                        .foregroundStyle(theme.tertiary)
+                        .foregroundStyle(theme.muted)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(20)
             }
-            .background(AppColor.background.ignoresSafeArea())
+            .background(AppBackground())
             .navigationTitle("Меню")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -109,15 +109,15 @@ struct SettingsView: View {
 }
 
 struct JellyButtonStyle: ButtonStyle {
-    var palette: JellyPalette
+    var skin: JellySkin
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(ManropeFont.font(size: 16, weight: .bold))
-            .foregroundStyle(.white)
+            .face(16, .bold)
+            .foregroundStyle(AppColor.ink)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 14)
-            .background(JellyBackground(palette: palette))
+            .background(JellyFill(skin: skin))
             .clipShape(Capsule())
             .opacity(configuration.isPressed ? 0.8 : 1)
     }
@@ -153,11 +153,11 @@ struct PasscodeChangeView: View {
                 lock.savePasscode(fresh, enableBiometry: lock.faceIDOn)
                 dismiss()
             }
-            .buttonStyle(JellyButtonStyle(palette: JellyPalette.ink))
+            .buttonStyle(JellyButtonStyle(skin: ThemeController().sheet(.bundle)))
             Spacer()
         }
         .padding(24)
-        .background(AppColor.background.ignoresSafeArea())
+        .background(AppBackground())
     }
 }
 
@@ -261,19 +261,13 @@ private struct FormSheet<Fields: View>: View {
                 save()
                 dismiss()
             }
-            .buttonStyle(JellyButtonStyle(palette: JellyPalette(
-                top: Color(hex: 0x3ED4B6),
-                mid: Color(hex: 0x14967E),
-                bottom: Color(hex: 0x0C6B59),
-                glow: Color(hex: 0x0A4F43),
-                gloss: 0.5
-            )))
+            .buttonStyle(JellyButtonStyle(skin: ThemeController().hero(.finance)))
             .disabled(!canSave)
             .opacity(canSave ? 1 : 0.45)
             Spacer()
         }
         .padding(24)
-        .background(AppColor.background.ignoresSafeArea())
+        .background(AppBackground())
     }
 }
 

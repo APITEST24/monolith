@@ -105,7 +105,7 @@
       "subtitle": "Сегодня, 11:18 · Польша",
       "geo_name": "Польша",
       "amount": -38.0,
-      "amount_label": "-$38.00"
+      "amount_label": "−$38.00"
     },
     {
       "id": 3,
@@ -123,7 +123,7 @@
       "subtitle": "Вчера · Испания",
       "geo_name": "Испания",
       "amount": -41.0,
-      "amount_label": "-$41.00"
+      "amount_label": "−$41.00"
     }
   ],
   "bundles": [
@@ -233,8 +233,8 @@
       "clicks": 364,
       "conversions": 8,
       "spend_label": "$80",
-      "profit_label": "-$19",
-      "roi_label": "-24%",
+      "profit_label": "−$19",
+      "roi_label": "−24%",
       "sort_order": 5
     }
   ],
@@ -394,7 +394,7 @@
       "title": "Увеличил бюджет VPN · Польша",
       "reason": "7 дней подряд ROI выше 60%, сработало правило масштабирования.",
       "result": "шаг +25%, расход $248, прибыль +$214",
-      "result_tone": "positive"
+      "result_tone": "neutral"
     },
     {
       "id": 9,
@@ -412,7 +412,7 @@
       "title": "Зафиксировал резерв $300",
       "reason": "Правило 30% от капитала $1 000, не тратить на тесты.",
       "result": "резерв активен, свободно $489.40",
-      "result_tone": "positive"
+      "result_tone": "neutral"
     },
     {
       "id": 7,

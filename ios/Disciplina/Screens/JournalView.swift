@@ -13,25 +13,32 @@ struct JournalView: View {
             }
             ScreenColumn {
                 if let snapshot = model.snapshot {
-                    JellyChrome(palette: theme.palette(.journal), shape: RoundedRectangle(cornerRadius: 28, style: .continuous)) {
-                        VStack(alignment: .leading, spacing: 4) {
+                    JellyChrome(
+                        skin: theme.hero(.journal),
+                        shape: RoundedRectangle(cornerRadius: 32, style: .continuous)
+                    ) {
+                        VStack(alignment: .leading, spacing: 0) {
                             Text("Журнал")
-                                .font(ManropeFont.font(size: 13, weight: .medium))
-                                .foregroundStyle(.white.opacity(0.78))
+                                .face(13, .semibold)
+                                .foregroundStyle(theme.onHero)
                             Text(snapshot.journalSummary.headline)
-                                .font(ManropeFont.font(size: 36, weight: .bold))
-                                .foregroundStyle(.white)
+                                .face(40, .bold, em: -0.05)
+                                .foregroundStyle(theme.ink)
+                                .padding(.top, 4)
                             Text(snapshot.journalSummary.subline)
-                                .font(ManropeFont.font(size: 14, weight: .medium))
-                                .foregroundStyle(.white.opacity(0.84))
+                                .face(14, .medium)
+                                .foregroundStyle(theme.onHero)
+                                .padding(.top, 6)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(18)
+                        .padding(.horizontal, 22)
+                        .padding(.top, 20)
+                        .padding(.bottom, 18)
                     }
                     if snapshot.journal.isEmpty {
                         Text("Журнал пуст")
-                            .font(ManropeFont.font(size: 15, weight: .medium))
-                            .foregroundStyle(theme.secondary)
+                            .face(15, .medium)
+                            .foregroundStyle(theme.muted)
                     }
                     ForEach(snapshot.journal) { entry in
                         entryCard(entry)
@@ -39,32 +46,48 @@ struct JournalView: View {
                 }
             }
         }
-        .background(AppColor.background.ignoresSafeArea())
+        .background(AppBackground())
         .toolbar(.hidden, for: .navigationBar)
         .sheet(isPresented: $showCreate) { JournalForm() }
     }
 
     private func entryCard(_ entry: JournalItem) -> some View {
-        JellyChrome(palette: JellyPalette.ink, shape: RoundedRectangle(cornerRadius: 26, style: .continuous), glow: false) {
-            VStack(alignment: .leading, spacing: 8) {
+        JellyChrome(
+            skin: theme.sheet(.journal),
+            shape: RoundedRectangle(cornerRadius: 32, style: .continuous)
+        ) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text(entry.dateLabel)
-                    .font(ManropeFont.font(size: 12, weight: .medium))
-                    .foregroundStyle(theme.tertiary)
+                    .face(12, .semibold)
+                    .foregroundStyle(theme.monochrome ? theme.muted : Color(hex: 0xE6928B))
                 Text(entry.title)
-                    .font(ManropeFont.font(size: 17, weight: .bold))
-                    .foregroundStyle(.white)
+                    .face(16, .bold, em: -0.03)
+                    .foregroundStyle(theme.ink)
+                    .padding(.top, 4)
                     .fixedSize(horizontal: false, vertical: true)
                 Text("Причина: \(entry.reason)")
-                    .font(ManropeFont.font(size: 14, weight: .medium))
-                    .foregroundStyle(theme.secondary)
+                    .face(12.5, .medium)
+                    .foregroundStyle(theme.muted)
+                    .padding(.top, 6)
                     .fixedSize(horizontal: false, vertical: true)
                 Text("Результат: \(entry.result)")
-                    .font(ManropeFont.font(size: 14, weight: .semibold))
-                    .foregroundStyle(theme.tone(entry.resultTone))
+                    .face(13, ManropeFont.demi, em: -0.02)
+                    .foregroundStyle(resultColor(entry.resultTone))
+                    .padding(.top, 8)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(16)
+            .padding(.horizontal, 16)
+            .padding(.top, 14)
+            .padding(.bottom, 12)
+        }
+    }
+
+    private func resultColor(_ tone: String) -> Color {
+        switch tone {
+        case "positive": return theme.positive
+        case "negative": return theme.negative
+        default: return theme.ink
         }
     }
 }

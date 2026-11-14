@@ -21,7 +21,7 @@ struct RootView: View {
                     }
                 }
         }
-        .background(AppColor.background.ignoresSafeArea())
+        .background(AppBackground())
         .sheet(isPresented: $model.showSettings) {
             SettingsView()
         }

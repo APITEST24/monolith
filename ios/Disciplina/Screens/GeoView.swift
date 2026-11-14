@@ -20,99 +20,146 @@ struct GeoView: View {
                 }
             }
         }
-        .background(AppColor.background.ignoresSafeArea())
+        .background(AppBackground())
         .toolbar(.hidden, for: .navigationBar)
         .sheet(isPresented: $showCreate) { GeoForm() }
     }
 
     private func hero(_ snapshot: Snapshot) -> some View {
         let summary = snapshot.geoSummary
-        return JellyChrome(palette: theme.palette(.geo), shape: RoundedRectangle(cornerRadius: 28, style: .continuous)) {
-            HStack(alignment: .center) {
-                VStack(alignment: .leading, spacing: 2) {
+        return JellyChrome(
+            skin: theme.hero(.geo),
+            shape: RoundedRectangle(cornerRadius: 32, style: .continuous)
+        ) {
+            HStack(alignment: .center, spacing: 16) {
+                VStack(alignment: .leading, spacing: 0) {
                     Text("Живые гео")
-                        .font(ManropeFont.font(size: 13, weight: .medium))
-                        .foregroundStyle(.white.opacity(0.75))
+                        .face(13, .semibold)
+                        .foregroundStyle(theme.onHero)
                     Text("\(summary.liveCount)")
-                        .font(ManropeFont.font(size: 48, weight: .bold))
-                        .foregroundStyle(.white)
+                        .face(44, .bold, em: -0.05)
+                        .foregroundStyle(theme.ink)
+                        .padding(.top, 4)
                     Text(summary.stoppedLine)
-                        .font(ManropeFont.font(size: 13, weight: .medium))
-                        .foregroundStyle(.white.opacity(0.78))
+                        .face(14, .medium)
+                        .foregroundStyle(theme.onHero)
+                        .padding(.top, 6)
                 }
-                Spacer()
+                Spacer(minLength: 8)
                 VStack(alignment: .trailing, spacing: 10) {
                     rate("Средний CPC", summary.avgCpcLabel)
                     rate("Средний EPC", summary.avgEpcLabel)
                 }
+                .frame(minWidth: 132, alignment: .trailing)
             }
-            .padding(.horizontal, 18)
-            .padding(.vertical, 18)
+            .padding(.horizontal, 22)
+            .padding(.top, 20)
+            .padding(.bottom, 18)
         }
     }
 
     private func rate(_ title: String, _ value: String) -> some View {
-        VStack(alignment: .trailing, spacing: 2) {
+        HStack {
             Text(title)
-                .font(ManropeFont.font(size: 12, weight: .medium))
-                .foregroundStyle(.white.opacity(0.7))
+                .face(11, .semibold)
+                .foregroundStyle(theme.onHero)
+            Spacer(minLength: 14)
             Text(value)
-                .font(ManropeFont.font(size: 16, weight: .bold))
-                .foregroundStyle(.white)
+                .face(16, .bold, em: -0.03)
+                .foregroundStyle(theme.ink)
         }
     }
 
     private func geoCard(_ geo: GeoItem) -> some View {
-        let trendColor = geo.trendPct < 0 ? theme.negative : (geo.trendPct > 0 ? theme.positive : theme.secondary)
-        return JellyChrome(palette: JellyPalette.ink, shape: RoundedRectangle(cornerRadius: 26, style: .continuous), glow: false) {
-            VStack(alignment: .leading, spacing: 14) {
+        let trendColor = geo.trendPct < 0 ? theme.negative : (abs(geo.trendPct) < 0.5 ? theme.ink : theme.positive)
+        let spark = geo.trendPct < 0 ? theme.negative : theme.positive
+        return JellyChrome(
+            skin: theme.sheet(geo.status == "stop" ? .geoStop : .geo),
+            shape: RoundedRectangle(cornerRadius: 32, style: .continuous)
+        ) {
+            VStack(alignment: .leading, spacing: 12) {
                 HStack(alignment: .center, spacing: 12) {
-                    Text(geo.code)
-                        .font(ManropeFont.font(size: 13, weight: .bold))
-                        .foregroundStyle(.white)
-                        .frame(width: 42, height: 42)
-                        .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white.opacity(0.08)))
-                    VStack(alignment: .leading, spacing: 2) {
+                    badge(geo)
+                    VStack(alignment: .leading, spacing: 3) {
                         Text(geo.name)
-                            .font(ManropeFont.font(size: 17, weight: .bold))
-                            .foregroundStyle(.white)
+                            .face(17, .bold, em: -0.03)
+                            .foregroundStyle(theme.ink)
                         Text(geo.subtitle)
-                            .font(ManropeFont.font(size: 12, weight: .medium))
-                            .foregroundStyle(theme.tertiary)
+                            .face(12, .medium)
+                            .foregroundStyle(theme.muted)
                     }
                     Spacer(minLength: 8)
                     StatusPill(title: geo.statusLabel, status: geo.status)
                 }
-                HStack(alignment: .bottom) {
-                    figure("CPC", geo.cpcLabel)
-                    figure("EPC", geo.epcLabel)
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Тренд")
-                            .font(ManropeFont.font(size: 12, weight: .medium))
-                            .foregroundStyle(theme.tertiary)
-                        HStack(spacing: 6) {
-                            TrendSpark(trend: geo.trendPct, color: trendColor)
-                            Text(geo.trendLabel)
-                                .font(ManropeFont.font(size: 15, weight: .bold))
-                                .foregroundStyle(trendColor)
-                        }
+                Well(radius: 14) {
+                    HStack(spacing: 0) {
+                        cell("CPC", geo.cpcLabel, theme.ink, divider: false)
+                        cell("EPC", geo.epcLabel, theme.ink, divider: true)
+                        trendCell(geo, color: trendColor, spark: spark)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-            .padding(16)
+            .padding(.horizontal, 16)
+            .padding(.top, 14)
+            .padding(.bottom, 12)
         }
     }
 
-    private func figure(_ title: String, _ value: String) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+    private func badge(_ geo: GeoItem) -> some View {
+        let stopped = geo.status == "stop"
+        return Text(geo.code)
+            .face(15, ManropeFont.blackish, em: -0.04)
+            .foregroundStyle(stopped ? AppColor.ink.opacity(0.70) : AppColor.ink)
+            .frame(width: 44, height: 44)
+            .background(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(
+                        LinearGradient(
+                            colors: stopped
+                                ? [Color(hex: 0x3A3A42), Color(hex: 0x1C1C22)]
+                                : theme.hero(.geo).stops,
+                            startPoint: UnitPoint(x: 0.2, y: 0),
+                            endPoint: UnitPoint(x: 0.75, y: 1)
+                        )
+                    )
+            )
+            .shadow(color: .black.opacity(0.28), radius: 2, y: 2)
+    }
+
+    private func cell(_ title: String, _ value: String, _ color: Color, divider: Bool) -> some View {
+        VStack(spacing: 2) {
             Text(title)
-                .font(ManropeFont.font(size: 12, weight: .medium))
-                .foregroundStyle(theme.tertiary)
+                .face(10, .semibold)
+                .foregroundStyle(theme.muted)
             Text(value)
-                .font(ManropeFont.font(size: 16, weight: .bold))
-                .foregroundStyle(.white)
+                .face(14, .bold, em: -0.03)
+                .foregroundStyle(color)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity)
+        .padding(.top, 8)
+        .padding(.bottom, 9)
+        .overlay(alignment: .leading) {
+            if divider { Rectangle().fill(theme.line).frame(width: 1).padding(.vertical, 8) }
+        }
+    }
+
+    private func trendCell(_ geo: GeoItem, color: Color, spark: Color) -> some View {
+        VStack(spacing: 2) {
+            Text("Тренд")
+                .face(10, .semibold)
+                .foregroundStyle(theme.muted)
+            HStack(spacing: 5) {
+                TrendSpark(trend: geo.trendPct, color: spark)
+                Text(geo.trendLabel)
+                    .face(14, .bold, em: -0.03)
+                    .foregroundStyle(color)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 8)
+        .padding(.bottom, 9)
+        .overlay(alignment: .leading) {
+            Rectangle().fill(theme.line).frame(width: 1).padding(.vertical, 8)
+        }
     }
 }

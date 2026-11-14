@@ -15,7 +15,7 @@ struct LockView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer(minLength: 24)
-            JellyChrome(palette: theme.palette(.finance), shape: Circle(), glow: true) {
+            JellyChrome(skin: theme.hero(.finance), shape: Circle()) {
                 Image(systemName: "lock.fill")
                     .font(.system(size: 28, weight: .semibold))
                     .foregroundStyle(.white)
@@ -27,7 +27,7 @@ struct LockView: View {
                 .padding(.top, 22)
             Text(prompt)
                 .font(ManropeFont.font(size: 15, weight: .medium))
-                .foregroundStyle(theme.secondary)
+                .foregroundStyle(theme.muted)
                 .multilineTextAlignment(.center)
                 .padding(.top, 6)
                 .padding(.horizontal, 32)
@@ -57,7 +57,7 @@ struct LockView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(AppColor.background.ignoresSafeArea())
+        .background(AppBackground())
         .onAppear {
             if lock.hasPasscode {
                 lock.tryBiometrics()

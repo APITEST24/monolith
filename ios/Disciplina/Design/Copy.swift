@@ -44,7 +44,7 @@ enum RuCopy {
         }
         let sign: String
         if negative {
-            sign = "-"
+            sign = "−"
         } else if signed && mag > 0.0000001 {
             sign = "+"
         } else {

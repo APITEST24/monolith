@@ -35,6 +35,8 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Resources/Fonts/Manrope.ttf</string>
+		<string>Manrope.ttf</string>
 		<string>Resources/Fonts/Manrope-Regular.ttf</string>
 		<string>Resources/Fonts/Manrope-Medium.ttf</string>
 		<string>Resources/Fonts/Manrope-SemiBold.ttf</string>

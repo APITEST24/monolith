@@ -58,7 +58,7 @@ def fmt_money(value: float, *, cents: bool | None = None, signed: bool = False) 
         body = f"{int(round(mag)):,}"
     body = body.replace(",", " ")
     if negative:
-        sign = "-"
+        sign = "−"
     elif signed and mag > 0.0000001:
         sign = "+"
     else:
@@ -67,7 +67,10 @@ def fmt_money(value: float, *, cents: bool | None = None, signed: bool = False) 
 
 
 def fmt_roi(pct: float) -> str:
-    return f"{int(round(pct))}%"
+    rounded = int(round(pct))
+    if rounded < 0:
+        return f"−{abs(rounded)}%"
+    return f"{rounded}%"
 
 
 def fmt_trend(pct: float) -> str:

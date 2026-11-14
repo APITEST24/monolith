@@ -12,20 +12,27 @@ struct RulesView: View {
             }
             ScreenColumn {
                 if let snapshot = model.snapshot {
-                    JellyChrome(palette: theme.palette(.rules), shape: RoundedRectangle(cornerRadius: 28, style: .continuous)) {
-                        VStack(alignment: .leading, spacing: 4) {
+                    JellyChrome(
+                        skin: theme.hero(.rules),
+                        shape: RoundedRectangle(cornerRadius: 32, style: .continuous)
+                    ) {
+                        VStack(alignment: .leading, spacing: 0) {
                             Text("Дисциплина")
-                                .font(ManropeFont.font(size: 13, weight: .medium))
-                                .foregroundStyle(.white.opacity(0.78))
+                                .face(13, .semibold)
+                                .foregroundStyle(theme.onHero)
                             Text(snapshot.ruleSummary.headline)
-                                .font(ManropeFont.font(size: 40, weight: .bold))
-                                .foregroundStyle(.white)
+                                .face(40, .bold, em: -0.05)
+                                .foregroundStyle(theme.ink)
+                                .padding(.top, 4)
                             Text(snapshot.ruleSummary.subline)
-                                .font(ManropeFont.font(size: 14, weight: .medium))
-                                .foregroundStyle(.white.opacity(0.84))
+                                .face(14, .medium)
+                                .foregroundStyle(theme.onHero)
+                                .padding(.top, 6)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(18)
+                        .padding(.horizontal, 22)
+                        .padding(.top, 20)
+                        .padding(.bottom, 18)
                     }
                     ForEach(snapshot.rules) { rule in
                         ruleCard(rule)
@@ -33,35 +40,36 @@ struct RulesView: View {
                 }
             }
         }
-        .background(AppColor.background.ignoresSafeArea())
+        .background(AppBackground())
         .toolbar(.hidden, for: .navigationBar)
     }
 
     private func ruleCard(_ rule: RuleItem) -> some View {
-        JellyChrome(palette: JellyPalette.ink, shape: RoundedRectangle(cornerRadius: 24, style: .continuous), glow: false) {
+        JellyChrome(
+            skin: theme.sheet(.rules),
+            shape: RoundedRectangle(cornerRadius: 32, style: .continuous)
+        ) {
             HStack(alignment: .center, spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(rule.title)
-                        .font(ManropeFont.font(size: 16, weight: .bold))
-                        .foregroundStyle(.white)
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(rule.title)
+                            .face(16, .bold, em: -0.03)
+                            .foregroundStyle(theme.ink)
+                        Spacer(minLength: 10)
+                        Text(rule.valueLabel)
+                            .face(18, .bold, em: -0.04)
+                            .foregroundStyle(rule.enabled ? theme.ink : theme.muted)
+                    }
                     Text(rule.detail)
-                        .font(ManropeFont.font(size: 13, weight: .medium))
-                        .foregroundStyle(theme.secondary)
+                        .face(12, .medium)
+                        .foregroundStyle(theme.muted)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                Spacer(minLength: 8)
-                Text(rule.valueLabel)
-                    .font(ManropeFont.font(size: 16, weight: .bold))
-                    .foregroundStyle(rule.valueMuted ? theme.tertiary : .white)
-                Toggle("", isOn: Binding(
-                    get: { rule.enabled },
-                    set: { _ in model.toggleRule(rule) }
-                ))
-                .labelsHidden()
-                .tint(theme.monochrome ? Color.white.opacity(0.7) : Color(hex: 0x3CBF6A))
+                JellyToggle(isOn: rule.enabled) { model.toggleRule(rule) }
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 14)
+            .padding(.vertical, 12)
+            .opacity(rule.enabled ? 1 : 0.78)
         }
     }
 }

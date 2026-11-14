@@ -80,9 +80,9 @@ def test_seed_matches_the_mockups(client):
     ]
     assert [tx["amount_label"] for tx in body["transactions"]] == [
         "+$72.20",
-        "-$38.00",
+        "−$38.00",
         "+$54.00",
-        "-$41.00",
+        "−$41.00",
     ]
 
     bundles = {row["title"]: row for row in body["bundles"]}
@@ -111,8 +111,8 @@ def test_seed_matches_the_mockups(client):
     assert bundles["E-com · Казахстан"]["roi_label"] == "8%"
     assert bundles["E-com · Казахстан"]["profit_label"] == "+$5"
     assert bundles["Travel · Мексика"]["status"] == "stop"
-    assert bundles["Travel · Мексика"]["roi_label"] == "-24%"
-    assert bundles["Travel · Мексика"]["profit_label"] == "-$19"
+    assert bundles["Travel · Мексика"]["roi_label"] == "−24%"
+    assert bundles["Travel · Мексика"]["profit_label"] == "−$19"
     assert bundles["Travel · Мексика"]["spend_label"] == "$80"
     assert bundles["Travel · Мексика"]["subtitle"] == "Native Ads · Travelpayouts"
 

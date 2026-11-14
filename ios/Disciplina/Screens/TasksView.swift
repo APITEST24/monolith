@@ -13,25 +13,32 @@ struct TasksView: View {
             }
             ScreenColumn {
                 if let snapshot = model.snapshot {
-                    JellyChrome(palette: theme.palette(.tasks), shape: RoundedRectangle(cornerRadius: 28, style: .continuous)) {
-                        VStack(alignment: .leading, spacing: 4) {
+                    JellyChrome(
+                        skin: theme.hero(.tasks),
+                        shape: RoundedRectangle(cornerRadius: 32, style: .continuous)
+                    ) {
+                        VStack(alignment: .leading, spacing: 0) {
                             Text(snapshot.taskSummary.dateLine)
-                                .font(ManropeFont.font(size: 13, weight: .medium))
-                                .foregroundStyle(.white.opacity(0.75))
+                                .face(13, .semibold)
+                                .foregroundStyle(theme.onHero)
                             Text(snapshot.taskSummary.headline)
-                                .font(ManropeFont.font(size: 40, weight: .bold))
-                                .foregroundStyle(.white)
+                                .face(52, .bold, em: -0.05)
+                                .foregroundStyle(theme.ink)
+                                .padding(.top, 6)
                             Text(snapshot.taskSummary.subline)
-                                .font(ManropeFont.font(size: 14, weight: .medium))
-                                .foregroundStyle(.white.opacity(0.82))
+                                .face(15, .medium)
+                                .foregroundStyle(theme.onHero)
+                                .padding(.top, 8)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(18)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 22)
+                        .padding(.bottom, 20)
                     }
                     if snapshot.tasks.isEmpty {
                         Text("На сегодня задач нет")
-                            .font(ManropeFont.font(size: 15, weight: .medium))
-                            .foregroundStyle(theme.secondary)
+                            .face(15, .medium)
+                            .foregroundStyle(theme.muted)
                     }
                     ForEach(snapshot.tasks) { task in
                         taskCard(task)
@@ -39,49 +46,64 @@ struct TasksView: View {
                 }
             }
         }
-        .background(AppColor.background.ignoresSafeArea())
+        .background(AppBackground())
         .toolbar(.hidden, for: .navigationBar)
         .sheet(isPresented: $showCreate) { TaskForm() }
     }
 
     private func taskCard(_ task: TaskItem) -> some View {
-        JellyChrome(palette: JellyPalette.ink, shape: RoundedRectangle(cornerRadius: 26, style: .continuous), glow: false) {
-            HStack(alignment: .top, spacing: 12) {
-                Button {
-                    model.toggleTask(task)
-                } label: {
+        JellyChrome(
+            skin: theme.sheet(.tasks),
+            shape: RoundedRectangle(cornerRadius: 32, style: .continuous)
+        ) {
+            HStack(alignment: .center, spacing: 14) {
+                Button { model.toggleTask(task) } label: {
                     ZStack {
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(task.done ? theme.palette(.tasks).mid : Color.clear)
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .stroke(task.done ? Color.clear : Color.white.opacity(0.28), lineWidth: 1.4)
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(
+                                LinearGradient(
+                                    colors: task.done
+                                        ? [Color(hex: 0xA07CBC), Color(hex: 0x5C3870), Color(hex: 0x321C42)]
+                                        : [Color(hex: 0x2A2A32), Color(hex: 0x16161C)],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
                         if task.done {
                             Image(systemName: "checkmark")
-                                .font(.system(size: 12, weight: .bold))
+                                .font(.system(size: 13, weight: .bold))
                                 .foregroundStyle(.white)
                         }
                     }
-                    .frame(width: 24, height: 24)
+                    .frame(width: 28, height: 28)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .stroke(Color.white.opacity(task.done ? 0.40 : 0.08), lineWidth: 1)
+                    )
                 }
                 .buttonStyle(.plain)
-                .padding(.top, 2)
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: 0) {
                     Text(task.title)
-                        .font(ManropeFont.font(size: 17, weight: .bold))
-                        .foregroundStyle(.white)
+                        .face(17, .bold, em: -0.03)
+                        .foregroundStyle(task.done ? theme.ink.opacity(0.72) : theme.ink)
                     Text(task.detail)
-                        .font(ManropeFont.font(size: 14, weight: .medium))
-                        .foregroundStyle(theme.secondary)
+                        .face(13, .medium)
+                        .foregroundStyle(theme.muted)
+                        .padding(.top, 6)
                         .fixedSize(horizontal: false, vertical: true)
                     if !task.note.isEmpty {
                         Text(task.note)
-                            .font(ManropeFont.font(size: 14, weight: .semibold))
-                            .foregroundStyle(theme.tone(task.noteTone))
+                            .face(12, ManropeFont.demi, em: -0.01)
+                            .foregroundStyle(task.done ? theme.positive : theme.tone("accent"))
+                            .padding(.top, 10)
                     }
                 }
                 Spacer(minLength: 0)
             }
-            .padding(16)
+            .padding(.horizontal, 18)
+            .padding(.top, 18)
+            .padding(.bottom, 16)
+            .opacity(task.done ? 0.88 : 1)
         }
     }
 }
