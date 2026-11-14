@@ -339,8 +339,8 @@ enum ManropeFont {
     static let blackish = UIFont.Weight(rawValue: 0.56)
 }
 
-extension Text {
-    func face(_ size: CGFloat, _ weight: UIFont.Weight = .medium, em: CGFloat = 0) -> Text {
+extension View {
+    func face(_ size: CGFloat, _ weight: UIFont.Weight = .medium, em: CGFloat = 0) -> some View {
         font(ManropeFont.font(size: size, weight: weight)).tracking(em * size)
     }
 }
