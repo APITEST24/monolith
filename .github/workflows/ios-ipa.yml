@@ -1,0 +1,87 @@
+# Unsigned Monolith.ipa for AltStore.
+# Needs Xcode 16+ because the project uses PBXFileSystemSynchronizedRootGroup.
+# No paid Apple Developer account and no signing capabilities (push, App Groups,
+# iCloud, Associated Domains). AltStore re-signs the IPA with a free Apple ID.
+
+name: iOS IPA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ios/**"
+      - ".github/workflows/ios-ipa.yml"
+  workflow_dispatch:
+
+jobs:
+  ipa:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode
+        run: |
+          set -euo pipefail
+          xcodebuild -version
+          xcode-select -p
+          major=$(xcodebuild -version | awk 'NR==1 {print $2}' | cut -d. -f1)
+          if [ "$major" -lt 16 ]; then
+            echo "Xcode 16 or newer is required."
+            exit 1
+          fi
+
+      - name: Archive without code signing
+        run: |
+          set -euo pipefail
+          mkdir -p build
+          xcodebuild \
+            -project ios/Monolith.xcodeproj \
+            -scheme Monolith \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath "$PWD/build/Monolith.xcarchive" \
+            -derivedDataPath "$PWD/build/DerivedData" \
+            archive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            | tee build/xcodebuild.log
+
+      - name: Package unsigned IPA
+        run: |
+          set -euo pipefail
+          APP=$(find build/Monolith.xcarchive -type d -name 'Monolith.app' -print -quit)
+          if [ -z "$APP" ]; then
+            echo "Monolith.app was not produced. Apps found:"
+            find build -type d -name '*.app' -print || true
+            exit 1
+          fi
+          rm -rf Payload
+          mkdir -p Payload
+          cp -R "$APP" Payload/Monolith.app
+          rm -rf Payload/Monolith.app/_CodeSignature
+          rm -f Payload/Monolith.app/embedded.mobileprovision
+          rm -f Monolith.ipa
+          zip -qry Monolith.ipa Payload
+          unzip -l Monolith.ipa | head -n 30
+          test -f Payload/Monolith.app/Info.plist
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Monolith-ipa
+          path: Monolith.ipa
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-log
+          path: build/xcodebuild.log
+          if-no-files-found: ignore

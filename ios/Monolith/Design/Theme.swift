@@ -60,11 +60,11 @@ struct JellySkin {
 
 final class ThemeController: ObservableObject {
     @Published var monochrome: Bool {
-        didSet { UserDefaults.standard.set(monochrome, forKey: "disciplina.mono") }
+        didSet { UserDefaults.standard.set(monochrome, forKey: "monolith.mono") }
     }
 
     init() {
-        monochrome = UserDefaults.standard.bool(forKey: "disciplina.mono")
+        monochrome = UserDefaults.standard.bool(forKey: "monolith.mono")
     }
 
     var background: Color { monochrome ? AppColor.monoBackground : AppColor.background }
@@ -334,6 +334,7 @@ enum ManropeFont {
         Font(uiFont(size: size, weight: weight))
     }
 
+    static let meta = UIFont.Weight(rawValue: 0.26)
     static let demi = UIFont.Weight(rawValue: 0.34)
     static let blackish = UIFont.Weight(rawValue: 0.56)
 }

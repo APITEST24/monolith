@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct DisciplinaApp: App {
+struct MonolithApp: App {
     @StateObject private var model = AppModel()
     @StateObject private var theme = ThemeController()
     @StateObject private var lock = LockStore()

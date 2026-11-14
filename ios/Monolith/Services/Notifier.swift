@@ -25,7 +25,7 @@ final class Notifier {
 
     func sendTest() {
         schedule(
-            title: "Дисциплина",
+            title: "Monolith",
             body: "Проверка уведомлений: стоп-лосс дня, осталось $12.",
             after: 2
         )

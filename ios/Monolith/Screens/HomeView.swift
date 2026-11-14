@@ -174,7 +174,7 @@ struct HomeView: View {
                         .foregroundStyle(theme.peekInk(section))
                     Spacer()
                     Text(meta)
-                        .face(13, UIFont.Weight(rawValue: 0.26), em: -0.01)
+                        .face(13, ManropeFont.meta, em: -0.01)
                         .foregroundStyle(theme.peekMuted(section))
                 }
                 .padding(.horizontal, 24)

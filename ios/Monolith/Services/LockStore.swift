@@ -12,7 +12,7 @@ final class LockStore: ObservableObject {
 
     init() {
         hasPasscode = KeychainStore.get("passcode-hash") != nil
-        faceIDOn = UserDefaults.standard.bool(forKey: "disciplina.face")
+        faceIDOn = UserDefaults.standard.bool(forKey: "monolith.face")
         refreshBiometryName()
     }
 
@@ -36,7 +36,7 @@ final class LockStore: ObservableObject {
         KeychainStore.set(hash(code, salt: salt), account: "passcode-hash")
         hasPasscode = true
         faceIDOn = enableBiometry
-        UserDefaults.standard.set(enableBiometry, forKey: "disciplina.face")
+        UserDefaults.standard.set(enableBiometry, forKey: "monolith.face")
         isUnlocked = true
         errorText = nil
     }

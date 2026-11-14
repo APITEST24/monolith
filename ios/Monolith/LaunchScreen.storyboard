@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mon-vc-001">
+    <device id="retina6_9" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <scene sceneID="mon-sc-001">
+            <objects>
+                <viewController id="mon-vc-001" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mon-vw-001">
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchSplash" translatesAutoresizingMaskIntoConstraints="NO" id="mon-im-001">
+                                <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mon-sa-001"/>
+                        <color key="backgroundColor" name="LaunchBackground"/>
+                        <constraints>
+                            <constraint firstItem="mon-im-001" firstAttribute="top" secondItem="mon-vw-001" secondAttribute="top" id="mon-ct-top"/>
+                            <constraint firstAttribute="bottom" secondItem="mon-im-001" secondAttribute="bottom" id="mon-ct-bot"/>
+                            <constraint firstItem="mon-im-001" firstAttribute="leading" secondItem="mon-vw-001" secondAttribute="leading" id="mon-ct-lea"/>
+                            <constraint firstAttribute="trailing" secondItem="mon-im-001" secondAttribute="trailing" id="mon-ct-tra"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mon-fr-001" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LaunchSplash" width="440" height="956"/>
+        <namedColor name="LaunchBackground">
+            <color red="0.075" green="0.078" blue="0.094" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

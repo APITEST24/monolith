@@ -12,22 +12,22 @@ final class AppModel: ObservableObject {
     @Published var bundleFilter = "all"
 
     @Published var baseURL: String {
-        didSet { UserDefaults.standard.set(baseURL, forKey: "disciplina.baseURL") }
+        didSet { UserDefaults.standard.set(baseURL, forKey: "monolith.baseURL") }
     }
 
     private let cacheURL: URL
     private let queueURL: URL
     private var queue: [[String: Any]] = []
     private let monitor = NWPathMonitor()
-    private let monitorQueue = DispatchQueue(label: "disciplina.reach")
+    private let monitorQueue = DispatchQueue(label: "monolith.reach")
     private var started = false
 
     init(preview: Snapshot? = nil) {
         let defaults = UserDefaults.standard
-        baseURL = defaults.string(forKey: "disciplina.baseURL") ?? ""
+        baseURL = defaults.string(forKey: "monolith.baseURL") ?? ""
         let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? FileManager.default.temporaryDirectory
-        let folder = support.appendingPathComponent("Disciplina", isDirectory: true)
+        let folder = support.appendingPathComponent("Monolith", isDirectory: true)
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
         cacheURL = folder.appendingPathComponent("snapshot.json")
         queueURL = folder.appendingPathComponent("queue.json")
@@ -262,13 +262,13 @@ final class AppModel: ObservableObject {
     }
 
     private func pullAlerts() async {
-        guard UserDefaults.standard.bool(forKey: "disciplina.alerts") else { return }
+        guard UserDefaults.standard.bool(forKey: "monolith.alerts") else { return }
         guard let report = try? await request(path: "api/v1/rules/check", method: "GET", body: nil, as: CheckReport.self) else { return }
         let notable = report.violations + report.warnings
         let signature = notable.map { "\($0.key):\($0.status):\($0.message)" }.joined(separator: "|")
-        let previous = UserDefaults.standard.string(forKey: "disciplina.alertSignature")
+        let previous = UserDefaults.standard.string(forKey: "monolith.alertSignature")
         guard signature != previous else { return }
-        UserDefaults.standard.set(signature, forKey: "disciplina.alertSignature")
+        UserDefaults.standard.set(signature, forKey: "monolith.alertSignature")
         for item in notable.prefix(3) {
             Notifier.shared.schedule(title: item.title, body: item.message, after: 1)
         }
@@ -371,7 +371,7 @@ enum APIError: Error {
 }
 
 enum KeychainStore {
-    private static let service = "app.disciplina.ios"
+    private static let service = "com.monolith.app"
 
     static func set(_ value: String, account: String) {
         let query: [String: Any] = [

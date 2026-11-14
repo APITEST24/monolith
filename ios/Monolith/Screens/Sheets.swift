@@ -42,7 +42,7 @@ struct SettingsView: View {
                         .font(ManropeFont.font(size: 16, weight: .semibold))
                         .tint(theme.monochrome ? .white : Color(hex: 0x3CBF6A))
                         .onChange(of: alerts) { _, enabled in
-                            UserDefaults.standard.set(enabled, forKey: "disciplina.alerts")
+                            UserDefaults.standard.set(enabled, forKey: "monolith.alerts")
                             if enabled {
                                 Task { _ = await Notifier.shared.requestAccess() }
                             }
@@ -90,7 +90,7 @@ struct SettingsView: View {
         .onAppear {
             url = model.baseURL
             apiKey = KeychainStore.get("api-key") ?? ""
-            alerts = UserDefaults.standard.bool(forKey: "disciplina.alerts")
+            alerts = UserDefaults.standard.bool(forKey: "monolith.alerts")
         }
         .sheet(isPresented: $showPasscode) {
             PasscodeChangeView()

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A10000000000000000000002"
-               BuildableName = "Disciplina.app"
-               BlueprintName = "Disciplina"
-               ReferencedContainer = "container:Disciplina.xcodeproj">
+               BuildableName = "Monolith.app"
+               BlueprintName = "Monolith"
+               ReferencedContainer = "container:Monolith.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A10000000000000000000002"
-            BuildableName = "Disciplina.app"
-            BlueprintName = "Disciplina"
-            ReferencedContainer = "container:Disciplina.xcodeproj">
+            BuildableName = "Monolith.app"
+            BlueprintName = "Monolith"
+            ReferencedContainer = "container:Monolith.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A10000000000000000000002"
-            BuildableName = "Disciplina.app"
-            BlueprintName = "Disciplina"
-            ReferencedContainer = "container:Disciplina.xcodeproj">
+            BuildableName = "Monolith.app"
+            BlueprintName = "Monolith"
+            ReferencedContainer = "container:Monolith.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
