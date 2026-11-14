@@ -1,0 +1,15 @@
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+server/data/*.db
+server/data/*.db-*
+.DS_Store
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.xcuserdata
+build/
+.idea/

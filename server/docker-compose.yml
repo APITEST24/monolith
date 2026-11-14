@@ -1,0 +1,17 @@
+services:
+  disciplina:
+    build: .
+    env_file:
+      - .env
+    environment:
+      DISCIPLINA_DB_PATH: /data/disciplina.db
+      DISCIPLINA_HOST: 0.0.0.0
+      DISCIPLINA_PORT: "8741"
+    ports:
+      - "127.0.0.1:8741:8741"
+    volumes:
+      - disciplina-data:/data
+    restart: unless-stopped
+
+volumes:
+  disciplina-data:

@@ -1,0 +1,580 @@
+{
+  "as_of": "2026-11-14",
+  "date_label": "Суббота, 14 ноября",
+  "finance": {
+    "balance": 789.4,
+    "reserve": 300.0,
+    "on_hold": 186.0,
+    "free": 489.4,
+    "invested": 1000.0,
+    "returned": 420.0,
+    "break_even_ratio": 0.42,
+    "profit_today": 34.2,
+    "spend_today": 38.0,
+    "income_today": 72.2,
+    "roi_today_pct": 90.0,
+    "stop_limit": 50.0,
+    "stop_spent": 38.0,
+    "series": [
+      {
+        "date": "2026-11-01",
+        "profit": 18.0
+      },
+      {
+        "date": "2026-11-02",
+        "profit": 12.0
+      },
+      {
+        "date": "2026-11-03",
+        "profit": 20.0
+      },
+      {
+        "date": "2026-11-04",
+        "profit": 15.0
+      },
+      {
+        "date": "2026-11-05",
+        "profit": 24.0
+      },
+      {
+        "date": "2026-11-06",
+        "profit": 28.0
+      },
+      {
+        "date": "2026-11-07",
+        "profit": 19.0
+      },
+      {
+        "date": "2026-11-08",
+        "profit": 26.0
+      },
+      {
+        "date": "2026-11-09",
+        "profit": 21.0
+      },
+      {
+        "date": "2026-11-10",
+        "profit": 30.0
+      },
+      {
+        "date": "2026-11-11",
+        "profit": 23.0
+      },
+      {
+        "date": "2026-11-12",
+        "profit": 17.0
+      },
+      {
+        "date": "2026-11-13",
+        "profit": 22.0
+      },
+      {
+        "date": "2026-11-14",
+        "profit": 34.2
+      }
+    ],
+    "display": {
+      "profit_today": "+$34.20",
+      "spend_today": "$38.00",
+      "income_today": "$72.20",
+      "roi_today": "90%",
+      "stop_ratio": "$38 / $50",
+      "balance": "$789.40",
+      "reserve": "$300.00",
+      "on_hold": "$186.00",
+      "free": "$489.40",
+      "invested": "$1 000",
+      "returned": "$420",
+      "break_even": "42%"
+    }
+  },
+  "transactions": [
+    {
+      "id": 1,
+      "occurred_at": "2026-11-14T16:40:00",
+      "title": "Admitad · Surfshark",
+      "subtitle": "Сегодня, 16:40 · Польша",
+      "geo_name": "Польша",
+      "amount": 72.2,
+      "amount_label": "+$72.20"
+    },
+    {
+      "id": 2,
+      "occurred_at": "2026-11-14T11:18:00",
+      "title": "TikTok Ads · VPN",
+      "subtitle": "Сегодня, 11:18 · Польша",
+      "geo_name": "Польша",
+      "amount": -38.0,
+      "amount_label": "-$38.00"
+    },
+    {
+      "id": 3,
+      "occurred_at": "2026-11-13T15:00:00",
+      "title": "Admitad · Skillbox",
+      "subtitle": "Вчера · Испания",
+      "geo_name": "Испания",
+      "amount": 54.0,
+      "amount_label": "+$54.00"
+    },
+    {
+      "id": 4,
+      "occurred_at": "2026-11-13T12:00:00",
+      "title": "Google Ads · Курсы",
+      "subtitle": "Вчера · Испания",
+      "geo_name": "Испания",
+      "amount": -41.0,
+      "amount_label": "-$41.00"
+    }
+  ],
+  "bundles": [
+    {
+      "id": 1,
+      "title": "VPN · Польша",
+      "subtitle": "TikTok Ads · Admitad · CPA",
+      "vertical": "VPN",
+      "geo_code": "PL",
+      "traffic_source": "TikTok Ads",
+      "network": "Admitad",
+      "payout_model": "CPA",
+      "status": "profit",
+      "status_label": "Прибыль",
+      "spend": 248.0,
+      "revenue": 462.0,
+      "profit": 214.0,
+      "roi_pct": 86.2903,
+      "clicks": 1378,
+      "conversions": 60,
+      "spend_label": "$248",
+      "profit_label": "+$214",
+      "roi_label": "86%",
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "title": "VPN · Филиппины",
+      "subtitle": "Push-сеть · Admitad · CPA",
+      "vertical": "VPN",
+      "geo_code": "PH",
+      "traffic_source": "Push-сеть",
+      "network": "Admitad",
+      "payout_model": "CPA",
+      "status": "profit",
+      "status_label": "Прибыль",
+      "spend": 159.0,
+      "revenue": 256.0,
+      "profit": 97.0,
+      "roi_pct": 61.0063,
+      "clicks": 1763,
+      "conversions": 28,
+      "spend_label": "$159",
+      "profit_label": "+$97",
+      "roi_label": "61%",
+      "sort_order": 2
+    },
+    {
+      "id": 3,
+      "title": "Курсы · Испания",
+      "subtitle": "Google Ads · Admitad · CPA",
+      "vertical": "Курсы",
+      "geo_code": "ES",
+      "traffic_source": "Google Ads",
+      "network": "Admitad",
+      "payout_model": "CPA",
+      "status": "test",
+      "status_label": "Тест",
+      "spend": 88.0,
+      "revenue": 116.0,
+      "profit": 28.0,
+      "roi_pct": 31.8182,
+      "clicks": 208,
+      "conversions": 16,
+      "spend_label": "$88",
+      "profit_label": "+$28",
+      "roi_label": "32%",
+      "sort_order": 3
+    },
+    {
+      "id": 4,
+      "title": "E-com · Казахстан",
+      "subtitle": "TikTok Ads · Admitad · CPS",
+      "vertical": "E-com",
+      "geo_code": "KZ",
+      "traffic_source": "TikTok Ads",
+      "network": "Admitad",
+      "payout_model": "CPS",
+      "status": "test",
+      "status_label": "Тест",
+      "spend": 62.0,
+      "revenue": 67.0,
+      "profit": 5.0,
+      "roi_pct": 8.0645,
+      "clicks": 564,
+      "conversions": 8,
+      "spend_label": "$62",
+      "profit_label": "+$5",
+      "roi_label": "8%",
+      "sort_order": 4
+    },
+    {
+      "id": 5,
+      "title": "Travel · Мексика",
+      "subtitle": "Native Ads · Travelpayouts",
+      "vertical": "Travel",
+      "geo_code": "MX",
+      "traffic_source": "Native Ads",
+      "network": "Travelpayouts",
+      "payout_model": "CPS",
+      "status": "stop",
+      "status_label": "Стоп",
+      "spend": 80.0,
+      "revenue": 61.0,
+      "profit": -19.0,
+      "roi_pct": -23.75,
+      "clicks": 364,
+      "conversions": 8,
+      "spend_label": "$80",
+      "profit_label": "-$19",
+      "roi_label": "-24%",
+      "sort_order": 5
+    }
+  ],
+  "geos": [
+    {
+      "id": 1,
+      "code": "PL",
+      "name": "Польша",
+      "subtitle": "VPN · TikTok Ads · Admitad",
+      "status": "live",
+      "status_label": "Живая",
+      "cpc": 0.18,
+      "epc": 0.34,
+      "trend_pct": 12.0,
+      "cpc_label": "$0.18",
+      "epc_label": "$0.34",
+      "trend_label": "↑ 12%",
+      "bundle_id": 1,
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "code": "PH",
+      "name": "Филиппины",
+      "subtitle": "VPN · Push-сеть · Admitad",
+      "status": "live",
+      "status_label": "Живая",
+      "cpc": 0.09,
+      "epc": 0.15,
+      "trend_pct": 6.0,
+      "cpc_label": "$0.09",
+      "epc_label": "$0.15",
+      "trend_label": "↑ 6%",
+      "bundle_id": 2,
+      "sort_order": 2
+    },
+    {
+      "id": 3,
+      "code": "ES",
+      "name": "Испания",
+      "subtitle": "Курсы · Google Ads · Admitad",
+      "status": "test",
+      "status_label": "Тест",
+      "cpc": 0.42,
+      "epc": 0.55,
+      "trend_pct": 3.0,
+      "cpc_label": "$0.42",
+      "epc_label": "$0.55",
+      "trend_label": "↑ 3%",
+      "bundle_id": 3,
+      "sort_order": 3
+    },
+    {
+      "id": 4,
+      "code": "KZ",
+      "name": "Казахстан",
+      "subtitle": "E-com · TikTok Ads · Admitad",
+      "status": "test",
+      "status_label": "Тест",
+      "cpc": 0.11,
+      "epc": 0.12,
+      "trend_pct": 0.0,
+      "cpc_label": "$0.11",
+      "epc_label": "$0.12",
+      "trend_label": "0%",
+      "bundle_id": 4,
+      "sort_order": 4
+    },
+    {
+      "id": 5,
+      "code": "MX",
+      "name": "Мексика",
+      "subtitle": "Travel · Native Ads",
+      "status": "stop",
+      "status_label": "Стоп",
+      "cpc": 0.22,
+      "epc": 0.17,
+      "trend_pct": -8.0,
+      "cpc_label": "$0.22",
+      "epc_label": "$0.17",
+      "trend_label": "↓ 8%",
+      "bundle_id": 5,
+      "sort_order": 5
+    }
+  ],
+  "geo_summary": {
+    "live_count": 4,
+    "stopped_count": 1,
+    "capital": 1000.0,
+    "avg_cpc": 0.2,
+    "avg_epc": 0.29,
+    "capital_label": "$1 000",
+    "avg_cpc_label": "$0.20",
+    "avg_epc_label": "$0.29",
+    "stopped_line": "и 1 в стопе · капитал $1 000"
+  },
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Проверить стоп-лосс дня",
+      "detail": "Дневной лимит $50. Сегодня уже потрачено $38.",
+      "note": "Запас $12 · правило соблюдено",
+      "note_tone": "positive",
+      "done": true,
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "title": "Разобрать креативы",
+      "detail": "Связка VPN · Польша. В кампании 8 объявлений, 2 слабых по CTR.",
+      "note": "TikTok Ads · не откладывать",
+      "note_tone": "accent",
+      "done": false,
+      "sort_order": 2
+    },
+    {
+      "id": 3,
+      "title": "Зарегистрироваться в партнёрке",
+      "detail": "Awin, вертикаль курсов. Документы уже собраны.",
+      "note": "Нужно до конца дня",
+      "note_tone": "accent",
+      "done": false,
+      "sort_order": 3
+    }
+  ],
+  "task_summary": {
+    "done": 1,
+    "total": 3,
+    "open": 2,
+    "headline": "1 из 3",
+    "subline": "две задачи ещё открыты",
+    "date_line": "Сегодня · Суббота, 14 ноября"
+  },
+  "journal": [
+    {
+      "id": 12,
+      "occurred_at": "2026-11-14T16:45:00",
+      "date_label": "Сегодня, 16:45",
+      "title": "Оставил VPN · Польша в работе",
+      "reason": "EPC $0.34 при CPC $0.18, день закрывается в плюсе.",
+      "result": "+$34.20 за день",
+      "result_tone": "positive"
+    },
+    {
+      "id": 11,
+      "occurred_at": "2026-11-13T19:10:00",
+      "date_label": "Вчера, 19:10",
+      "title": "Остановил Travel · Мексика",
+      "reason": "ROI −24% при расходе $80, сработал стоп-лосс связки.",
+      "result": "−$19, связка в стопе",
+      "result_tone": "negative"
+    },
+    {
+      "id": 10,
+      "occurred_at": "2026-11-12T18:30:00",
+      "date_label": "12 ноября, 18:30",
+      "title": "Увеличил бюджет VPN · Польша",
+      "reason": "7 дней подряд ROI выше 60%, сработало правило масштабирования.",
+      "result": "шаг +25%, расход $248, прибыль +$214",
+      "result_tone": "positive"
+    },
+    {
+      "id": 9,
+      "occurred_at": "2026-11-10T14:05:00",
+      "date_label": "10 ноября, 14:05",
+      "title": "Запустил тест Курсы · Испания",
+      "reason": "Живой оффер Skillbox, умеренный CPC $0.42.",
+      "result": "пока ROI 32% при расходе $88, тест идёт",
+      "result_tone": "neutral"
+    },
+    {
+      "id": 8,
+      "occurred_at": "2026-11-08T11:20:00",
+      "date_label": "8 ноября, 11:20",
+      "title": "Зафиксировал резерв $300",
+      "reason": "Правило 30% от капитала $1 000, не тратить на тесты.",
+      "result": "резерв активен, свободно $489.40",
+      "result_tone": "positive"
+    },
+    {
+      "id": 7,
+      "occurred_at": "2026-11-06T12:40:00",
+      "date_label": "6 ноября, 12:40",
+      "title": "Запустил тест E-com · Казахстан",
+      "reason": "Узкий оффер, CPC $0.11. Лимит тестов позволяет вторую связку.",
+      "result": "расход $62, прибыль +$5, тест идёт",
+      "result_tone": "neutral"
+    },
+    {
+      "id": 6,
+      "occurred_at": "2026-11-05T09:15:00",
+      "date_label": "5 ноября, 09:15",
+      "title": "Подключил Push-сеть · Филиппины",
+      "reason": "EPC выше CPC, вертикаль VPN уже в плюсе на Польше.",
+      "result": "ROI 61%, прибыль +$97",
+      "result_tone": "positive"
+    },
+    {
+      "id": 5,
+      "occurred_at": "2026-11-03T17:50:00",
+      "date_label": "3 ноября, 17:50",
+      "title": "Отклонил серую вертикаль",
+      "reason": "Оффер не из белого списка. В работе только VPN, курсы, e-com и travel.",
+      "result": "связку не открывал",
+      "result_tone": "neutral"
+    },
+    {
+      "id": 4,
+      "occurred_at": "2026-11-01T10:00:00",
+      "date_label": "1 ноября, 10:00",
+      "title": "Зафиксировал капитал $1 000",
+      "reason": "Рабочий депозит на цикл тестов и масштабирование.",
+      "result": "вложено $1 000, резерв посчитан отдельно",
+      "result_tone": "neutral"
+    },
+    {
+      "id": 3,
+      "occurred_at": "2026-10-28T15:20:00",
+      "date_label": "28 октября, 15:20",
+      "title": "Перевёл VPN · Польша из теста в прибыль",
+      "reason": "ROI держится выше 60% несколько дней подряд.",
+      "result": "статус «Прибыль», связка остаётся в работе",
+      "result_tone": "positive"
+    },
+    {
+      "id": 2,
+      "occurred_at": "2026-10-25T13:05:00",
+      "date_label": "25 октября, 13:05",
+      "title": "Подключил Admitad и первые офферы",
+      "reason": "Surfshark и Skillbox, белые вертикали, понятный холд.",
+      "result": "источник дохода для Польши и Испании",
+      "result_tone": "positive"
+    },
+    {
+      "id": 1,
+      "occurred_at": "2026-10-20T11:00:00",
+      "date_label": "20 октября, 11:00",
+      "title": "Открыл журнал дисциплины",
+      "reason": "Одному легко нарушить стоп. Каждое решение записывается.",
+      "result": "правила включены до первой связки",
+      "result_tone": "neutral"
+    }
+  ],
+  "journal_summary": {
+    "count": 12,
+    "headline": "12 записей",
+    "subline": "последняя — сегодня, 16:45"
+  },
+  "rules": [
+    {
+      "id": 1,
+      "key": "daily_stop_loss",
+      "title": "Стоп-лосс дня",
+      "value_label": "$50",
+      "value_muted": false,
+      "detail": "Сегодня расход $38 · осталось $12",
+      "enabled": true,
+      "params": {
+        "limit": 50
+      },
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "key": "bundle_stop_loss",
+      "title": "Стоп-лосс связки",
+      "value_label": "$80",
+      "value_muted": false,
+      "detail": "При достижении связка уходит в стоп",
+      "enabled": true,
+      "params": {
+        "limit": 80
+      },
+      "sort_order": 2
+    },
+    {
+      "id": 3,
+      "key": "capital_reserve",
+      "title": "Резерв капитала",
+      "value_label": "$300",
+      "value_muted": false,
+      "detail": "30% от $1 000, не использовать в тестах",
+      "enabled": true,
+      "params": {
+        "amount": 300,
+        "percent": 30
+      },
+      "sort_order": 3
+    },
+    {
+      "id": 4,
+      "key": "scale_step",
+      "title": "Шаг масштабирования",
+      "value_label": "25%",
+      "value_muted": false,
+      "detail": "После 7 дней при ROI выше 50%",
+      "enabled": true,
+      "params": {
+        "percent": 25,
+        "days": 7,
+        "roi_threshold": 50
+      },
+      "sort_order": 4
+    },
+    {
+      "id": 5,
+      "key": "test_limit",
+      "title": "Лимит тестов",
+      "value_label": "2",
+      "value_muted": false,
+      "detail": "Сейчас открыто 2 теста — Испания и Казахстан",
+      "enabled": true,
+      "params": {
+        "limit": 2
+      },
+      "sort_order": 5
+    },
+    {
+      "id": 6,
+      "key": "withdraw_to_zero",
+      "title": "Вывод до нуля",
+      "value_label": "ВЫКЛ",
+      "value_muted": true,
+      "detail": "Пока вернулось $420 из $1 000",
+      "enabled": false,
+      "params": {},
+      "sort_order": 6
+    }
+  ],
+  "rule_summary": {
+    "enabled": 5,
+    "total": 6,
+    "headline": "5 из 6",
+    "subline": "правил сейчас включены"
+  },
+  "home": {
+    "bundles_label": "5 активных",
+    "geos_label": "4 страны",
+    "tasks_label": "3 на сегодня",
+    "journal_label": "12 записей",
+    "rules_label": "стоп $50"
+  }
+}
