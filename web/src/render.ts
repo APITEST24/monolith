@@ -101,7 +101,7 @@ function home(snap: Snapshot): string {
   return `<section class="screen" data-screen="home">
     <header class="home-head">
       <div class="home-titles">
-        <div class="t-title">Дисциплина</div>
+        <div class="t-title">Monolith</div>
         <div class="t-date">${esc(snap.date_label)}</div>
       </div>
       <div class="grow"></div>
