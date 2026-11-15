@@ -1,0 +1,71 @@
+name: Web and server
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - "server/**"
+      - "start-monolith.bat"
+      - "README.md"
+      - ".github/workflows/web.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Build the PWA
+        working-directory: web
+        run: |
+          npm ci
+          npm run build
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test the API
+        working-directory: server
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pytest -q
+
+      - name: Pack the Windows release
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/monolith-release
+          mkdir -p /tmp/monolith-release/Monolith/web
+          rsync -a \
+            --exclude .venv \
+            --exclude __pycache__ \
+            --exclude .pytest_cache \
+            --exclude '*.db' \
+            --exclude '*.db-*' \
+            --exclude .env \
+            server /tmp/monolith-release/Monolith/
+          cp -a web/dist /tmp/monolith-release/Monolith/web/dist
+          cp README.md start-monolith.bat /tmp/monolith-release/Monolith/
+          cd /tmp/monolith-release
+          zip -r -q monolith-windows.zip Monolith
+          test -s monolith-windows.zip
+
+      - name: Upload Windows zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: monolith-windows
+          path: /tmp/monolith-release/monolith-windows.zip
+          if-no-files-found: error
+          retention-days: 14

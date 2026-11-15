@@ -70,6 +70,7 @@ Register-ScheduledTask `
     -Force | Out-Null
 Start-ScheduledTask -TaskName "DisciplinaServer"
 Write-Host "Service task DisciplinaServer is registered and started."
+Write-Host "Monolith: http://127.0.0.1:8741/"
 Write-Host "API: http://127.0.0.1:8741/health"
 Write-Host "Docs: http://127.0.0.1:8741/docs"
-Write-Host "Next: tailscale serve, see the README. Do not open port 8741 on the public firewall."
+Write-Host "Next: tailscale serve, then Add to Home Screen in Safari. Do not open port 8741 on the public firewall."

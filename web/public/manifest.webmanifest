@@ -1,0 +1,21 @@
+{
+  "id": "/",
+  "name": "Monolith",
+  "short_name": "Monolith",
+  "description": "Личный учёт дисциплины арбитража",
+  "lang": "ru",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#131418",
+  "theme_color": "#131418",
+  "icons": [
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -13,3 +13,5 @@ xcuserdata/
 *.xcuserdata
 build/
 .idea/
+web/node_modules/
+web/dist/

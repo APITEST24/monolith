@@ -14,6 +14,16 @@ def test_health_is_open(client):
     assert response.json()["ok"] is True
 
 
+def test_root_does_not_swallow_the_api(client):
+    root = client.get("/")
+    assert root.status_code == 200
+    assert b"Monolith" in root.content or "Дисциплина" in root.text
+    assert client.get("/health").json()["ok"] is True
+    assert client.get("/api/v1/snapshot", headers=IOS).status_code == 200
+    assert client.get("/openapi.json").status_code == 200
+    assert client.get("/docs").status_code == 200
+
+
 def test_missing_and_wrong_key(client):
     assert client.get("/api/v1/snapshot").status_code == 401
     assert client.get("/api/v1/snapshot", headers={"X-API-Key": "nope"}).status_code == 401
